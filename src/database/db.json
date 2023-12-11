@@ -1,0 +1,86 @@
+{
+  "users": [
+    {
+      "name": "Mohd Shami",
+      "username": "mohdshami",
+      "email": "shami@gmail.com",
+      "phone": "7896547896",
+      "id": 1
+    },
+    {
+      "name": "vinay",
+      "Email": "",
+      "userName": "",
+      "phone": "32154687",
+      "username": "vinayD45",
+      "email": "vinay@123gmail.com",
+      "id": 2
+    },
+    {
+      "name": "vinay",
+      "Email": "",
+      "userName": "",
+      "phone": "000000000",
+      "username": "vinayD45",
+      "email": "vinay@123gmail.com",
+      "id": 3
+    },
+    {
+      "name": "vinay",
+      "Email": "",
+      "userName": "",
+      "phone": "000000000",
+      "email": "vinay@123gmail.com",
+      "username": "vinayD45",
+      "id": 4
+    },
+    {
+      "name": "5notvin",
+      "Email": "",
+      "userName": "",
+      "phone": "55555",
+      "username": "5vinay",
+      "email": "vinay@5gmail.com",
+      "id": 5
+    },
+    {
+      "name": "notvin",
+      "Email": "",
+      "userName": "",
+      "phone": "33333333333333333",
+      "username": "vinayD45",
+      "email": "vinay@123gmail.com",
+      "id": 6
+    },
+    {
+      "name": "vinay",
+      "Email": "",
+      "userName": "",
+      "phone": "33333333333333333",
+      "username": "vinayD45",
+      "email": "vinay@123gmail.com",
+      "id": 7
+    },
+    {
+      "name": "vinay",
+      "username": "vinayD45",
+      "email": "vinay@123gmail.com",
+      "phone": "5555555",
+      "id": 8
+    },
+    {
+      "name": "vinay",
+      "username": "vinayD45",
+      "email": "vinay@123gmail.com",
+      "phone": "77777",
+      "id": 9
+    },
+    {
+      "name": "vinay",
+      "username": "vinayD45",
+      "email": "vinay@123gmail.com",
+      "phone": "3333",
+      "id": 10
+    }
+  ]
+}
