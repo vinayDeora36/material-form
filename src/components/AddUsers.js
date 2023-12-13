@@ -43,7 +43,7 @@ const AddUsers = () => {
     console.log(user);
   };
 
-  const addUserDetails = async () => {
+  const addUserDetails = async() => {
     await addUser(user);
     navigate("/all")
 

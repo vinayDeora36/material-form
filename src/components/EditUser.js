@@ -49,7 +49,7 @@ const EditUser = () => {
     console.log(user);
   };
 
-  const addUserDetails = async () => {
+  const editUserDetails = async () => {
     await editUser(user , id);
     navigate("/all")
 
@@ -61,7 +61,7 @@ const EditUser = () => {
 
         <FormControl>
           <InputLabel>Name</InputLabel>
-          <Input onChange={(e) => onValueChange(e)} name="name"value={user.name}/>
+          <Input onChange={(e) => onValueChange(e)} name="name" value={user.name}/>
         </FormControl>
 
         <FormControl>
@@ -76,7 +76,7 @@ const EditUser = () => {
           <InputLabel>Phone</InputLabel>
           <Input onChange={(e) => onValueChange(e)} name="phone" value={user.phone}/>
         </FormControl>
-        <Button variant="contained" onClick={() => addUserDetails()}>
+        <Button variant="contained" onClick={() => editUserDetails()}>
           Edit User
         </Button>
       </Container>

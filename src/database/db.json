@@ -1,13 +1,6 @@
 {
   "users": [
     {
-      "name": "Mohd Shami",
-      "username": "mohdshami",
-      "email": "shami@gmail.com",
-      "phone": "7896547896",
-      "id": 1
-    },
-    {
       "name": "vinay",
       "Email": "",
       "userName": "",
@@ -44,7 +37,7 @@
       "id": 5
     },
     {
-      "name": "notvin",
+      "name": "6notvin",
       "Email": "",
       "userName": "",
       "phone": "33333333333333333",
@@ -72,7 +65,7 @@
       "name": "vinay",
       "username": "vinayD45",
       "email": "vinay@123gmail.com",
-      "phone": "77777",
+      "phone": "2",
       "id": 9
     },
     {

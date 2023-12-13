@@ -18,10 +18,19 @@ export const getUsers =async() =>{
         console.log("error while calling getUsers api ", error.message)
     }
 }
+
+// export const getUsers = async (id) => {
+//     // id = id || '';
+//     try {
+//         return await axios.get(`${API_URL}/${id}`);
+//     } catch (error) {
+//         console.log('Error while calling getUsers api ', error);
+//     }
+// }
 // get single user data for Edit user
 export const getUser =async(data) =>{
     try{
-        return await axios.get(`${API_URL}/${data}`)
+        return await axios?.get(`${API_URL}/${data}`)
     }catch(error){
         console.log("error while calling getUser api ", error.message)
     }
@@ -29,7 +38,7 @@ export const getUser =async(data) =>{
 
 export const editUser =async (data , id)=>{
     try{
-        return await axios.put(`${API_URL}/${id}`, data)
+        return await axios?.put(`${API_URL}/${id}`, data)
     }catch(error){
         console.log("error while edit user", error.message)
     }

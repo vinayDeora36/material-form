@@ -13,7 +13,7 @@ const AllUsers = () => {
   const getUserDetails=async ()=>{
    let responce =await getUsers()
    console.log("responce",responce)
-   setUserDetails(responce.data);
+   setUserDetails(responce?.data);
   }
   
   const deleteUserData=async(id)=>{
@@ -34,13 +34,13 @@ const AllUsers = () => {
   </TableHead>
   <TableBody>
 {
-  userDetails.map(user=>(
+  userDetails?.map(user=>(
     <TableRow>
       <TableCell>{user.id}</TableCell>
-      <TableCell>{user.name}</TableCell>
-      <TableCell>{user.username}</TableCell>
-      <TableCell>{user.email}</TableCell>
-      <TableCell>{user.phone}</TableCell>
+      <TableCell>{user?.name}</TableCell>
+      <TableCell>{user?.username}</TableCell>
+      <TableCell>{user?.email}</TableCell>
+      <TableCell>{user?.phone}</TableCell>
       <TableCell>
         <Button variant='contained' style={{marginRight:"1rem"}} component={Link} to={`/edit/${user.id}`}>Edit</Button>
         <Button variant='contained' color='secondary' onClick={()=>deleteUserData(user.id)}>Delete</Button>
