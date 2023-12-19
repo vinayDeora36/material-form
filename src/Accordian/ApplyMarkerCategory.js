@@ -122,12 +122,12 @@ import {
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import useApplyMarkerCategoryData from "../utils/useApplyMarkerCategoryData";
-
+import { addUserDetails } from "../service/api";
 export default function ApplyMarkerCategory() {
   const [age, setAge] = useState("");
   const [rows, setRows] = useState([]);
   const [targetMapId, setTargetMapId] = useState(""); // Define the target group_map_id
-
+;
   const handleChange = (event) => {
     setAge(event.target.value);
   };
@@ -167,11 +167,32 @@ export default function ApplyMarkerCategory() {
       ),
     },
   ];
-  const handleSubmit = () => {
+
+
+  // const initialValue2= {
+  //   location_title: '',
+  //   location_address: '',
+  //   location_latitude: '',
+  //   location_longitude: '',
+  //   location_city: '',
+  //   location_state: '',
+  //   location_country: '',
+  //   location_postal_code: '',
+  //   location_settings: {
+  //     hide_infowindow: '',
+  //   },
+  //   location_infowindow_default_open: '',
+  //   location_draggable: '',
+  // };
+  
+  const handleSubmit =async () => {
     console.log("Submit clicked!");
+    // await addUserDetails(user)
+
+    
   };
   return (
-    <div style={{ height: "auto", width: "auto" }}>
+    <div style={{ height: "auto", width: "100%" }}>
       <Box display="flex" alignItems="center">
         <Typography>Show:</Typography>
         <FormControl variant="standard" sx={{ marginLeft: 1 }}> 
@@ -194,7 +215,7 @@ export default function ApplyMarkerCategory() {
 
         <Button
           variant="contained"
-          onClick={handleSubmit}
+          onClick={()=>handleSubmit()}
           style={{ position: "absolute", right: "2rem" }}
         >
           Submit
@@ -217,3 +238,107 @@ export default function ApplyMarkerCategory() {
   );
 }
 
+
+
+// my YT code
+
+// import React from 'react'
+// import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material";
+// import { useEffect, useState } from "react";
+// const ApplyMarkerCategory = () => {
+
+//   const columns = [
+//       { field: 'Category', headerName: 'Category', width: 130 },
+//   { field: 'Parent', headerName: 'Parent', width: 130 },
+//   {
+//     field: 'fullName',
+//     headerName: 'Icon',
+//     description: 'This column has a value getter and is not sortable.',
+//     sortable: false,
+//     width: 160,
+//     valueGetter: (params) =>
+//       `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+//   },
+// ];
+
+//   const handlechangepage = (event, newpage) => {
+//     pagechange(newpage);
+//   };
+
+//   const handleRowsPerPage = (event) => {
+//     rowperpagechange(+event.target.value);
+//     pagechange(0);
+//   };
+
+//   const [rows, rowchange] = useState([]);
+//   const [page, pagechange] = useState(0);
+//   const [rowperpage, rowperpagechange] = useState(5);
+
+//   useEffect(() => {
+//     fetch("http://localhost/wordpress/gold/wp-json/wpgmp/v1/marker_categories")
+//       .then(resp => resp.json())
+//       .then(resp => {
+//         if (Array.isArray(resp)) {
+//           rowchange(resp);
+//           console.log('rows m sdata',rows)
+//         } else {
+//           rowchange([]); // If response is not an array, set an empty array
+//         }
+//       })
+//       .catch(e => {
+//         console.log('error hai bhai',e.message);
+//       });
+//   }, []);
+//   return (
+//     <div style={{ textAlign: 'center' }}>
+//             <h1>MUI Table</h1>
+
+//             <Paper sx={{ width: '90%', marginLeft: '5%' }}>
+//                 <TableContainer sx={{maxHeight:450}}>
+//                     <Table stickyHeader>
+//                         <TableHead>
+//                             <TableRow>
+//                                 {columns.map((column) => (
+//                                     <TableCell style={{ backgroundColor: 'black', color: 'white' }} key={column.id}>{column.name}</TableCell>
+//                                 ))}
+//                             </TableRow>
+//                         </TableHead>
+//                         <TableBody>
+//                             {rows && rows
+//                                 .slice(page * rowperpage, page * rowperpage + rowperpage)
+//                                 .map((row, i) => {
+//                                     return (
+//                                         <TableRow key={i}>
+//                                             {columns && columns.map((column, i) => {
+//                                                 let value = row[column.id];
+//                                                 return (
+//                                                     <TableCell key={value}>
+//                                                         {value}
+//                                                     </TableCell>
+//                                                 )
+//                                             })}
+//                                         </TableRow>
+//                                     )
+//                                 })}
+//                         </TableBody>
+//                     </Table>
+//                 </TableContainer>
+//                 <TablePagination
+//                     rowsPerPageOptions={[5, 10, 25]}
+//                     rowsPerPage={rowperpage}
+//                     page={page}
+//                     count={rows.length}
+//                     component="div"
+//                     onPageChange={handlechangepage}
+//                     onRowsPerPageChange={handleRowsPerPage}
+
+//                 >
+
+//                 </TablePagination>
+//             </Paper>
+
+//         </div>
+//   )
+// }
+
+// export default ApplyMarkerCategory

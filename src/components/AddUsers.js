@@ -33,21 +33,21 @@ const initialValue = {
   phone: ''
 }
 
-const AddUsers = () => {
-  const [user, setUser] = useState(initialValue);
-  const navigate =useNavigate()
-  
-  const onValueChange = (e) => {
-    // console.log(e.target.name ,e.target.value)
-    setUser({ ...user, [e.target.name]: e.target.value });
-    console.log(user);
-  };
+  const AddUsers = () => {
+    const [user, setUser] = useState(initialValue);
+    const navigate =useNavigate()
+    
+    const onValueChange = (e) => {
+      // console.log(e.target.name ,e.target.value)
+      setUser({ ...user, [e.target.name]: e.target.value });
+      console.log(user);
+    };
 
-  const addUserDetails = async() => {
-    await addUser(user);
-    navigate("/all")
+    const addUserDetails = async() => {
+      await addUser(user);
+      navigate("/all")
 
-  };
+    };
 
   return (
     <>

@@ -1,10 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { makeStyles } from '@mui/styles';
 
+
+
+const useStyles = makeStyles({
+  // 'fc-3': {
+  //   backgroundColor: 'lightblue',
+
+  // },
+
+  // 'form-control': {
+  //   backgroundColor: 'red',
+
+  // },
+  // 'fc-form-group': {
+  //   // Your custom styles here for the cell
+  //   backgroundColor: 'green',
+  //   marginTop:'2rem'
+  //   // Add more styles as needed
+  // },
+});
 const MapWithLocationField = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
-
+  const classes = useStyles();
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -20,14 +40,16 @@ const MapWithLocationField = () => {
     }
   }, []);
 
+  
+
   return (
-    <Grid container >
-      <Grid item md={2}>
+    <Grid container className={classes['fc-form-group']} >
+      <Grid item md={2} className={classes['fc-3']}>
         <Typography variant="h6" gutterBottom style={{ fontWeight: 'bold', color: 'black' }} sx={{ marginTop: '10px' }}>
           Current Location
-        </Typography> 
+        </Typography>   
       </Grid>
-      <Grid item md={8}  sx={{ marginTop: '15px' }} >
+      <Grid item md={8}  sx={{ marginTop: '15px' }}  className={classes['form-control']} >
         {currentLocation && (
           <iframe
             title="Map"
