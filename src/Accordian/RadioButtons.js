@@ -92,7 +92,7 @@ const RadioButtons = forwardRef((props, ref) => {
             <Typography variant="body1" className="text-gray-500 pl-[4rem] " >
               Enter the marker infoWindow message for the location you are creating. You can enter plain text as well as HTML.
             </Typography>
-          </Grid>
+          </Grid>  
         </Grid>
       ) : (
         <Grid container alignItems="center"  className={classes['fc-form-group.hiderow']}>
