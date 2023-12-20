@@ -6,26 +6,20 @@ import RadioButtons from "./RadioButtons";
 import { makeStyles } from "@mui/styles";
 import {
   Box,
-  Button,
   Checkbox,
   FormControl,
-  InputLabel,
   NativeSelect,
   OutlinedInput,
   Typography,
 } from "@mui/material";
 import FileUploadButton from "./FileUploadButton";
 import { useState } from "react";
-import { editUser2, getUsers2 } from "../service/api";
+import {get_location_In_InputFields} from "../service/api";
 import { useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import AccBody from "./AccBody";
-// import { useState } from "react";
-// import { addUserDetails } from "../service/api";
-// import AccBody from "./AccBody";
+import { useParams } from "react-router-dom";
 
 const initialValue2 = {
-  location_id:"",
+  location_id: "",
   location_title: "",
   location_address: "",
   location_latitude: "",
@@ -59,9 +53,15 @@ const useStyles = makeStyles({
 });
 
 const LocationInformation = forwardRef((props, ref) => {
+
+  // const [location_id, setLocationId] = useState('');
   const [user, setUser] = useState(initialValue2);
   const classes = useStyles();
-  const {id}= useParams()
+  
+  
+  const { id } = useParams();
+
+
 
   const location_title = useRef(null);
   const location_address = useRef(null);
@@ -75,7 +75,6 @@ const LocationInformation = forwardRef((props, ref) => {
   useImperativeHandle(ref, () => ({
     getValues: () => {
       return {
-        
         location_title: location_title.current.value,
         location_address: location_address.current.value,
         location_latitude: location_latitude.current.value,
@@ -84,112 +83,90 @@ const LocationInformation = forwardRef((props, ref) => {
         location_state: location_state.current.value,
         location_country: location_country.current.value,
         location_postal_code: location_postal_code.current.value,
-   
       };
     },
   }));
-
-  // ... (other code)
-
-  // Function to send 'user' data to the parent component ('AccBody')
+// child to parent data transfer
   const sendDataToParent = (userData) => {
-    props.onSendUserData(userData); // Call the function received from the parent with the user data
+    props.onSendUserData(userData);
   };
-
-
 
   useEffect(() => {
     // Call the function to send 'user' data whenever 'user' state changes
     sendDataToParent(user);
   }, [user, props]);
 
+
   useEffect(() => {
+  if (id) {
     getUserData2();
-    // editUserDetails2();
+  }
   }, [id]);
 
 
-  // const editUserDetails2 = async () => {
-  //   await editUser2(user , id);
-  //   // navigate("/all")
-
-  // };
   const onValueChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
-    console.log("USER H",user);
+    
   };
 
-  const getUserData2=async ()=>{
-    let responce = await getUsers2(id)
-    console.log("edit responce getUsers2 LocationInformation",responce?.data?.location_obj)
-    setUser(responce?.data?.location_obj)
-    
-    // console.log("user Location INformation",user)
-    // console.log("id",id)
-    // console.log("user.location id", responce?.data?.location_obj.location_id ,'id')
-    // if (id === responce?.data?.location_obj.location_id) {
-    //   console.log(`Yes, both are the same. id is ${id} and user.location_id is ${user.location_id}`);
-    
-      
-    // } else {
-    //   console.log(`No, they are different. id is ${id} and user.location_id is ${user.location_id}`);
-    // }
-    
-
-
-  }
-
+    // Get User Data In Input Fields and Set UserData By value={user?.location_title}:-
+    const getUserData2 = async () => {
+    let responce = await get_location_In_InputFields(id);
+     console.log("edit responce getUsers2 LocationInformation", responce?.data?.location_obj);
+    setUser(responce?.data?.location_obj);
+   
+  };
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
-    <div>
-        {/* <Button variant="contained" onClick={() => editUserDetails2()}>
-          Edit User
-        </Button> */}
-        <FormControl>
+    <div className="justify-between"> 
+   
+        <Grid
+          container
+          spacing={2}
+          alignItems="center"
+          className={`${classes["fc-form-group"]}`}
+        >
+          <Grid item xs={2} className={classes["fc-3"]}>
+            <label
+              htmlFor="name"
+              className="font-semibold"
+              
+            >
+              Location Title
+            </label>
+            <Typography variant="subtitle1" component="span" color="error">
+              *
+            </Typography>
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              inputRef={location_title}
+              className={classes["form-control"]}
+              id="name"
+              name="location_title"
+              label="Enter Location Title"
+              variant="outlined"
+              size="large"
+              fullWidth
+              required
+              onChange={(e) => onValueChange(e)}
+              value={user?.location_title}
+            />
+          </Grid>
+        </Grid>
+    
       <Grid
         container
         spacing={2}
         alignItems="center"
-        className={classes["fc-form-group"]}
+        className={`${classes["fc-form-group"]} space-y-4`}
       >
         <Grid item xs={2} className={classes["fc-3"]}>
           <label
             htmlFor="name"
-            // style={{ fontWeight: "bold", color: "black", fontStyle: "inherit" }}
-          >
-            Location Title
-          </label>
-          <Typography variant="subtitle1" component="span" color="error">
-            *
-          </Typography>
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            inputRef={location_title}
-            className={classes["form-control"]}
-            id="name"
-            name="location_title"
-            label="Enter Location Title"
-            variant="outlined"
-            size="large"
-            fullWidth
-            required
-            onChange={(e) => onValueChange(e)}  value={user?.location_title}
-          />
-        </Grid>
-      </Grid>
-      </FormControl>
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        className={classes["fc-form-group"]}
-      >
-        <Grid item xs={2} className={classes["fc-3"]}>
-          <label
-            htmlFor="name"
-            // style={{ fontWeight: "bold", color: "black" }}
+            className="font-semibold "
+
           >
             Location Address{" "}
           </label>
@@ -201,25 +178,22 @@ const LocationInformation = forwardRef((props, ref) => {
           <TextField
             inputRef={location_address}
             id="name"
-            className={
-              classes["form-control wpgmp_auto_suggest pac-target-input"]
+            className={` ${classes["form-control wpgmp_auto_suggest pac-target-input"]} `
+             
             }
             name="location_address"
             label="Enter Location Address"
             variant="outlined"
             size="large"
             fullWidth
-            sx={{ marginTop: "10px" }}
+            // sx={{ marginTop: "10px" }}
             required
-            onChange={(e) => onValueChange(e)}  value={user?.location_address}
+            onChange={(e) => onValueChange(e)}
+            value={user?.location_address}
           />
           <Typography
             variant="body1"
-            // style={{
-            //   whiteSpace: "nowrap",
-            //   textOverflow: "ellipsis",
-            //   color: "gray",
-            // }}
+        className="text-gray-500 "
           >
             Enter the location address here. Google auto suggest helps you to
             choose one.
@@ -231,12 +205,13 @@ const LocationInformation = forwardRef((props, ref) => {
         container
         alignItems="center"
         spacing={2}
-        className={classes["fc-form-group"]}
+        className={`${classes["fc-form-group"]} space-y-4`}
       >
         <Grid item xs={2} className={classes["fc-3"]}>
           <label
             htmlFor="name"
-            // style={{ fontWeight: "bold", color: "black" }}
+            className="font-semibold"
+
           >
             Latitude and Longitude{" "}
           </label>
@@ -244,19 +219,20 @@ const LocationInformation = forwardRef((props, ref) => {
             *
           </Typography>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={4} className=" ">
           <TextField
             inputRef={location_latitude}
-            className={classes["fc-3"]}
+            
+            className={`${classes["fc-3"]} `}
             id="googlemap_latitude"
             name="location_latitude"
             label="Latitude"
             variant="outlined"
             size="small"
             fullWidth
-            // sx={{ marginTop: "10px" }}
             required
-            onChange={(e) => onValueChange(e)}  value={user?.location_latitude}
+            onChange={(e) => onValueChange(e)}
+            value={user?.location_latitude}
           />
         </Grid>
 
@@ -270,9 +246,9 @@ const LocationInformation = forwardRef((props, ref) => {
             variant="outlined"
             size="small"
             fullWidth
-            // sx={{ marginTop: "10px" }}
             required
-            onChange={(e) => onValueChange(e)}  value={user?.location_longitude}
+            onChange={(e) => onValueChange(e)}
+            value={user?.location_longitude}
           />
         </Grid>
       </Grid>
@@ -281,12 +257,13 @@ const LocationInformation = forwardRef((props, ref) => {
         container
         alignItems="center"
         spacing={2}
-        className={classes["fc-form-group"]}
+        className={`${classes["fc-form-group"]} space-y-4`}
       >
         <Grid item xs={2} className={classes["fc-3"]}>
           <label
             htmlFor="name"
-            // style={{ fontWeight: "bold", color: "black" }}
+            className="font-semibold"
+
           >
             City & State{" "}
           </label>
@@ -302,7 +279,8 @@ const LocationInformation = forwardRef((props, ref) => {
             size="small"
             fullWidth
             // sx={{ marginTop: "10px" }}
-            onChange={(e) => onValueChange(e)}  value={user?.location_city}
+            onChange={(e) => onValueChange(e)}
+            value={user?.location_city}
           />
         </Grid>
 
@@ -317,7 +295,8 @@ const LocationInformation = forwardRef((props, ref) => {
             size="small"
             fullWidth
             // sx={{ marginTop: "10px" }}
-            onChange={(e) => onValueChange(e)}  value={user?.location_state}
+            onChange={(e) => onValueChange(e)}
+            value={user?.location_state}
           />
         </Grid>
       </Grid>
@@ -325,12 +304,13 @@ const LocationInformation = forwardRef((props, ref) => {
         container
         alignItems="center"
         spacing={2}
-        className={classes["fc-form-group"]}
+        className={`${classes["fc-form-group"]} space-y-4`}
       >
         <Grid item xs={2} className={classes["fc-3"]}>
           <label
             htmlFor="name"
-            //  style={{ fontWeight: "bold", color: "black" }}
+            className="font-semibold"
+
           >
             Country & Postal Code{" "}
           </label>
@@ -345,8 +325,8 @@ const LocationInformation = forwardRef((props, ref) => {
             variant="outlined"
             size="small"
             fullWidth
-            // sx={{ marginTop: "10px" }}
-            onChange={(e) => onValueChange(e)}  value={user?.location_country}
+            onChange={(e) => onValueChange(e)}
+            value={user?.location_country}
           />
         </Grid>
 
@@ -360,8 +340,8 @@ const LocationInformation = forwardRef((props, ref) => {
             variant="outlined"
             size="small"
             fullWidth
-            // sx={{ marginTop: "10px" }}
-            onChange={(e) => onValueChange(e)}  value={user?.location_postal_code}
+            onChange={(e) => onValueChange(e)}
+            value={user?.location_postal_code}
           />
         </Grid>
       </Grid>
@@ -377,7 +357,8 @@ const LocationInformation = forwardRef((props, ref) => {
         <Grid item xs={2} className={classes["fc-3"]}>
           <label
             htmlFor="name"
-            // style={{ fontWeight: "bold", color: "black", fontStyle: "inherit" }}
+            className="font-semibold"
+
           >
             Location Image
           </label>
@@ -395,15 +376,15 @@ const LocationInformation = forwardRef((props, ref) => {
         <Grid item xs={2} className={classes["fc-3"]}>
           <label
             htmlFor="name"
-            // style={{ fontWeight: "bold", color: "black", fontStyle: "inherit" }}
+            className="font-semibold text-sm"
+
           >
             Disable Infowindow
           </label>
         </Grid>
         <Grid
           item
-          // style={{ display: "flex", alignItems: "center" }}
-          className={classes.checkbox}
+          className={`${classes.checkbox} flex items-center`} 
         >
           <Checkbox
             name="location_settings[hide_infowindow]"
@@ -414,11 +395,7 @@ const LocationInformation = forwardRef((props, ref) => {
 
           <Typography
             variant="body1"
-            // style={{
-            //   whiteSpace: "nowrap",
-            //   textOverflow: "ellipsis",
-            //   marginTop: "1rem",
-            // }}
+        
           >
             Do you want to disable infowindow for this location?
           </Typography>
@@ -433,21 +410,16 @@ const LocationInformation = forwardRef((props, ref) => {
         <Grid item xs={2} className={classes["fc-3"]}>
           <label
             htmlFor="name"
-            // style={{
-            //   fontWeight: "bold",
-            //   color: "black",
-            //   fontStyle: "inherit",
-            //   fontStyle: "inherit",
-            //   whiteSpace: "nowrap",
-            // }}
+            className="font-semibold text-sm"
+
           >
             Infowindow Default Open
           </label>
         </Grid>
         <Grid
           item
-          // style={{ display: "flex", alignItems: "center" }}
-          className={classes.checkbox}
+       
+          className={`${classes.checkbox} flex items-center`} 
         >
           <Checkbox
             value={true}
@@ -458,11 +430,7 @@ const LocationInformation = forwardRef((props, ref) => {
 
           <Typography
             variant="body1"
-            // style={{
-            //   whiteSpace: "nowrap",
-            //   textOverflow: "ellipsis",
-            //   marginTop: "1rem",
-            // }}
+           
           >
             Check to enable infowindow default open.
           </Typography>
@@ -477,15 +445,15 @@ const LocationInformation = forwardRef((props, ref) => {
         <Grid item xs={2} className={classes["fc-3"]}>
           <label
             htmlFor="name"
-            // style={{ fontWeight: "bold", color: "black", fontStyle: "inherit" }}
+            className="font-semibold text-sm"
+
           >
             Marker Draggable
           </label>
         </Grid>
         <Grid
           item
-          // style={{ display: "flex", alignItems: "center" }}
-          className={classes.checkbox}
+          className={`${classes.checkbox} flex items-center`} 
         >
           <Checkbox
             name="location_draggable"
@@ -496,11 +464,6 @@ const LocationInformation = forwardRef((props, ref) => {
 
           <Typography
             variant="body1"
-            // style={{
-            //   whiteSpace: "nowrap",
-            //   textOverflow: "ellipsis",
-            //   marginTop: "1rem",
-            // }}
           >
             Check if you want to allow visitors to drag the marker.
           </Typography>
@@ -514,28 +477,23 @@ const LocationInformation = forwardRef((props, ref) => {
           justifyContent="flex-start"
           spacing={2}
         >
-          <Grid item xs={12} sm={2.5} className={classes["fc-3"]}>
+           <Grid item xs={2}  className={classes["fc-3"]}>
             <label
               htmlFor="name"
-              // style={{ fontWeight: "bold", color: "black" }}
+             className="font-semibold"
             >
               Marker Animation
             </label>
           </Grid>
-          <Grid item sm={8}>
-            <FormControl sx={{ m: 1 }} variant="outlined">
+          <Grid item >
+            <FormControl sx={{ m: 1 }} variant="outlined " className="w-[50rem] pl-[-2rem]">
               <NativeSelect
                 // value={selectedAnimation}
                 // onChange={handleAnimationChange}
                 input={<OutlinedInput />}
                 label="please Select"
                 id="select2-chosen-2"
-                // style={{
-                //   width: "50rem",
-                //   marginTop: "1rem",
-                //   marginLeft: "-3rem",
-                // }}
-                // id="marker-animation-select"
+          
               >
                 <option aria-label="please Select" value="" />
                 <option value="BOUNCE">BOUNCE</option>

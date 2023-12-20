@@ -6,21 +6,19 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExtraFieldsValues from "./ExtraFieldsValues";
 import LocationInformation from "./LocationInformation";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { useState } from "react";
 import ApplyMarkerCategory from "./ApplyMarkerCategory";
 import { Button, Grid } from "@mui/material";
-import { addUserDetails, editUser2 } from "../service/api";
+import { addLocationDetails, editLocationDetails,} from "../service/api";
 import { useRef } from "react";
 import { useEffect } from "react";
 
 const AccBody = () => {
   const component1Ref = useRef();
-  // const location = useLocation();
-  // console.log('user',usersId)
-  const { id } = useParams();
   const [expanded, setExpanded] = useState(false);
   const [user, setUser] = useState({}); // Initialize user state
+  
   const navigate = useNavigate();
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -30,25 +28,20 @@ const AccBody = () => {
   // Function to receive 'user' data from the child component ('LocationInformation')
   const handleReceivedUserData = (userData) => {
     setUser(userData); // Update 'user' state in the parent component with the received data
-    console.log("aagya user ", user);
-    // console.log( "user id" ,user.location_id)
+   
+
   };
 
-
+// Add New Location Or Edit Location (by save Location button);
   const handleSubmitFormData = async (e) => {
     e.preventDefault();
     const valuesComponent1 = component1Ref.current.getValues();
-    console.log("valuesComponent1", valuesComponent1);
   
     try {
       if (!user.location_id) {
-        // If there's no user location ID, add a new entry
-        await addUserDetails(valuesComponent1);
-        console.log("New entry added", valuesComponent1);
+        await addLocationDetails(valuesComponent1);
       } else {
-        // If there's a user location ID, edit the existing entry
-        const editData = await editUser2(user, user.location_id);
-        console.log("Edit data saved", editData);
+        await editLocationDetails(user, user.location_id);
       }
       navigate("/all");
     } catch (error) {
@@ -61,6 +54,7 @@ const AccBody = () => {
   useEffect(() => {
     setExpanded("panel1"); // Open first accordion if openAccordion is set to '1'
   }, []);
+  
   return (
     <form onSubmit={handleSubmitFormData}>
       <div style={{ width: "70%", margin: "2rem auto" }}>
@@ -141,16 +135,8 @@ const AccBody = () => {
           </AccordionDetails>
         </Accordion>
 
-        {/* <Grid
-          container
-          direction="row"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-          style={{ minHeight: "60vh" }}
-        ></Grid> */}
-
-        <Grid item>
-          <Button type="submit" variant="contained" size="small">
+        <Grid className=" mt-4" >
+          <Button type="submit" variant="contained" size="small" >
             Save Location
           </Button>
         </Grid>

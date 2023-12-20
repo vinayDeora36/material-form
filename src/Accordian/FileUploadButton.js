@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import Input from '@mui/material/Input';
 import { makeStyles } from '@mui/styles';
 
 
@@ -37,7 +36,7 @@ const FileUploadButton = () => {
   };
 
   return (
-    <div style={{margin:'1.5rem 2rem '}} className={classes['fc-6']}>
+    <div  className={`${classes["fc-6"]}  m-7`}>
       <input
       id="input_loc_img"
       name="location_settings[featured_image]"
@@ -47,7 +46,7 @@ const FileUploadButton = () => {
         onChange={handleFileChange}
       />
       <Button variant="contained" color="primary" onClick={handleFileUpload}>
-        Choose File
+        Choose
       </Button>
     </div>
   );
