@@ -13,12 +13,12 @@ import { Button, Grid } from "@mui/material";
 import { addLocationDetails, editLocationDetails,} from "../service/api";
 import { useRef } from "react";
 import { useEffect } from "react";
-
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 const AccBody = () => {
   const component1Ref = useRef();
   const [expanded, setExpanded] = useState(false);
-  const [user, setUser] = useState({}); // Initialize user state
-  
+  const [user, setUser] = useState({}); 
   const navigate = useNavigate();
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -36,12 +36,15 @@ const AccBody = () => {
   const handleSubmitFormData = async (e) => {
     e.preventDefault();
     const valuesComponent1 = component1Ref.current.getValues();
-  
+    // console.log("valuesComponent1",valuesComponent1)
+
     try {
       if (!user.location_id) {
         await addLocationDetails(valuesComponent1);
+        console.log("Add new entry of location values valuesComponent1",valuesComponent1)
       } else {
         await editLocationDetails(user, user.location_id);
+        console.log("user edit location function data ",user)
       }
       navigate("/all");
     } catch (error) {
@@ -57,22 +60,30 @@ const AccBody = () => {
   
   return (
     <form onSubmit={handleSubmitFormData}>
-      <div style={{ width: "70%", margin: "2rem auto" }}>
+      <div className="p-4 ">
         <Accordion
           expanded={expanded === "panel1"}
           onChange={handleChange("panel1")}
+          // style={{
+          //   // background:"lightblue"
+          //   // mar
+          // }}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
+
           >
+           {expanded === "panel1" ?  <RemoveCircleOutlineIcon />  : <ControlPointIcon />} 
             <Typography
               sx={{ width: "33%", flexShrink: 0 }}
+              
               style={{
                 whiteSpace: "nowrap",
                 fontWeight: "bold",
                 color: "black",
+                margin: "0 10px"
               }}
             >
               Location Information
@@ -95,12 +106,15 @@ const AccBody = () => {
             aria-controls="panel2bh-content"
             id="panel2bh-header"
           >
+            {expanded === "panel2" ?  <RemoveCircleOutlineIcon />  : <ControlPointIcon />} 
             <Typography
-              sx={{ width: "33%", flexShrink: 0, whiteSpace: "nowrap" }}
+              sx={{ width: "33%", flexShrink: 0 }}
+              
               style={{
                 whiteSpace: "nowrap",
                 fontWeight: "bold",
                 color: "black",
+                margin: "0 10px"
               }}
             >
               Extra Fields Values
@@ -119,12 +133,15 @@ const AccBody = () => {
             aria-controls="panel3bh-content"
             id="panel3bh-header"
           >
+          {expanded === "panel3" ?  <RemoveCircleOutlineIcon />  : <ControlPointIcon />} 
             <Typography
               sx={{ width: "33%", flexShrink: 0 }}
+              
               style={{
                 whiteSpace: "nowrap",
                 fontWeight: "bold",
                 color: "black",
+                margin: "0 10px"
               }}
             >
               Apply Marker Category

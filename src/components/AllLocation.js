@@ -11,11 +11,13 @@ import {
   TableRow,
   TableBody,
   Checkbox,
+  Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
 const AllLocation = () => {
   const [locationDetails, setLocationDetails] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
     getLocationsDetails();
   }, []);
@@ -34,8 +36,27 @@ const AllLocation = () => {
 
     getLocationsDetails();
   };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredLocations = locationDetails.filter((location) =>
+    location.location_title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
+      <input
+        type="text"
+        placeholder="Search by name..."
+        value={searchTerm}
+        onChange={handleSearch}
+        className="p-1 my-4 border border-gray-400 mx-4 rounded-md  w-[30rem] focus:outline-none"
+      />
+      {/* <Button type="submit" variant="contained" size="small">
+        Search
+      </Button> */}
       <Table>
         <TableHead>
           <TableRow>
@@ -46,25 +67,25 @@ const AllLocation = () => {
               />
             </TableCell>
 
-            <TableCell> Title</TableCell>
-            <TableCell> Address</TableCell>
-            <TableCell> City</TableCell>
-            <TableCell> Latitude</TableCell>
-            <TableCell> Longitude</TableCell>
+            <TableCell style={{whiteSpace: "nowrap",fontWeight: "bold",color: "black",margin: "0 10px" }}> Title</TableCell>
+            <TableCell style={{whiteSpace: "nowrap",fontWeight: "bold",color: "black",margin: "0 10px" }}>  Address</TableCell>
+            <TableCell style={{whiteSpace: "nowrap",fontWeight: "bold",color: "black",margin: "0 10px" }}>  City</TableCell>
+            <TableCell style={{whiteSpace: "nowrap",fontWeight: "bold",color: "black",margin: "0 10px" }}> Latitude</TableCell>
+            <TableCell style={{whiteSpace: "nowrap",fontWeight: "bold",color: "black",margin: "0 10px" }}>  Longitude</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {locationDetails?.map((location) => (
-            <TableRow>
+        <TableBody >
+          {filteredLocations?.map((location, index) => (
+            <TableRow  className={index % 2 === 0 ? "bg-gray-100 " : "bg-white" }>
               <TableCell>
                 <Checkbox name="id[]" value={location?.location_id} />
               </TableCell>
 
-              <TableCell>{location?.location_title}</TableCell>
-              <TableCell>{location?.location_address}</TableCell>
-              <TableCell>{location?.location_city}</TableCell>
-              <TableCell>{location?.location_latitude}</TableCell>
-              <TableCell>{location?.location_longitude}</TableCell>
+              <TableCell style={{whiteSpace: "nowrap",color: "gray",margin: "0 10px" }}>{location?.location_title}</TableCell>
+              <TableCell style={{whiteSpace: "nowrap",color: "GrayText",margin: "0 10px" }}>{location?.location_address}</TableCell>
+              <TableCell style={{whiteSpace: "nowrap",color: "GrayText",margin: "0 10px" }}>{location?.location_city}</TableCell>
+              <TableCell style={{whiteSpace: "nowrap",color: "GrayText",margin: "0 10px" }}>{location?.location_latitude}</TableCell>
+              <TableCell style={{whiteSpace: "nowrap",color: "GrayText",margin: "0 10px" }}>{location?.location_longitude}</TableCell>
               <TableCell>
                 <IconButton
                   variant="contained"
@@ -72,6 +93,7 @@ const AllLocation = () => {
                   component={Link}
                   to={`/edit/${location.location_id}`}
                   aria-label="edit"
+                  className="hover:text-blue-600 "
                 >
                   <EditIcon />
                 </IconButton>
@@ -79,6 +101,7 @@ const AllLocation = () => {
                   variant="contained"
                   onClick={() => deleteLocation(location.location_id)}
                   aria-label="delete"
+                  className="hover:text-red-600"
                 >
                   <DeleteIcon />
                 </IconButton>

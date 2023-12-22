@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 });
 
 const RadioButtons = forwardRef((props, ref) => {
-  const [selectedValue, setSelectedValue] = useState("a");
+  const [selectedValue, setSelectedValue] = useState("marker");
   const classes = useStyles();
   const location_messages = useRef(null); // Initialize the ref for location_messages
 
@@ -79,7 +79,7 @@ const RadioButtons = forwardRef((props, ref) => {
           </Grid>
           <Grid   >
             <TextareaAutosize
-              inputRef={location_messages} // Connect the ref to the TextareaAutosize component
+              // inputRef={location_messages} // Connect the ref to the TextareaAutosize component
               id="googlemap_infomessage"
               name="location_messages"
               label="Enter the marker infoWindow message for the location you are creating."

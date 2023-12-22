@@ -2,7 +2,6 @@ import axios from "axios";
 
 const API_URL = "http://localhost/wordpress/gold/wp-json/wpgmp/v1/locations";
 const API_URL2 = "http://localhost/wordpress/gold/wp-json/wpgmp/v1/locations";
-// const GET_API_UTL_BY_ID= "http://localhost/wordpress/gold/wp-json/wpgmp/v1/locations"
 
 // Add New Location Details in Form to Api
 export const addLocationDetails = async (data) => {
